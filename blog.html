@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>startup-blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body id="blogbg">
+    <div class="container-md">
+        <div class="col-12">
+    <div id="dis"></div>
+        </div>
+    </div>
+</body>
+<script>
+    let btn = document.getElementById("public");
+
+    //function showblog(){
+        
+        fetch('https://techcrunch.com/wp-json/wp/v2/posts')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Data received:', data);
+        const d = data;
+        let store = ' ';
+        d.forEach(data => {
+            store += '<h1>' + data.title.rendered + '</h1>' + '<hr>'+'<hr>' + '<br>' + '<p>' + data.content.rendered + '</p>' +'<br>' + '<br>' + '<br>' + '<p>' + data.excerpt.rendered + '</p>' + '<br>' + '<br>' + '<br>' + '<p>'+data.meta.rendered + '</p>';
+        })
+        console.log(store);
+        document.getElementById("dis").innerHTML = store;
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+
+ //   }
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> 
+</html>
